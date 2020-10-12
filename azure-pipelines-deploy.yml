@@ -1,0 +1,40 @@
+trigger:
+- master
+
+pr: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
+
+- task: InstallSSHKey@0
+  inputs:
+    knownHostsEntry: $(knownHostsEntry)
+    sshKeySecureFile: repeatio-pwa-secure-file-ds
+
+- script: |
+    npm install -g webpack webpack-cli --save-dev
+    npm install -g gh-pages --save-dev
+  displayName: 'Install webpack & gh-pages'
+
+- script: |
+    npm install
+  displayName: 'Install dependencies'
+
+- script: |
+    npx webpack --config webpack/webpack.prod.js
+  displayName: 'Build'
+
+- script: |
+    git config user.name "DaniilShmelev"
+    git config user.email $(primaryGithubEmail)
+  displayName: 'Configure git'
+
+- script: |
+    npx gh-pages -d dist -r git@github.com:DaniilShmelev/repeatio-pwa.git
+  displayName: 'Deploy'
