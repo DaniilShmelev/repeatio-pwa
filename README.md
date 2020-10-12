@@ -22,3 +22,6 @@ FB2, EPUB and PDF, you can use the translation feature in either (if the book qu
 
 ## Where can I try it?
 You can find repeatio [here](https://qucumbah.github.io/repeatio-pwa/)
+
+## This is a completely new section
+It's been added to check that azure task "Deploy" doesn't start on pull request
