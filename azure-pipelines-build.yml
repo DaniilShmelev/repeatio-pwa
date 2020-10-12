@@ -1,0 +1,20 @@
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    npm install -g webpack webpack-cli --save-dev
+  displayName: 'Install webpack'
+
+- script: |
+    npm install
+  displayName: 'Install dependencies'
+
+- script: |
+    npx webpack --config webpack/webpack.prod.js
+  displayName: 'Build'
